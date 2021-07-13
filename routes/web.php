@@ -19,16 +19,13 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('main.home');
-// });
 
-Auth::routes();
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/category/{id}', [HomeController::class, 'postcategory'])->name('postcategory');
 Route::get('/category/{category_id}/{post_id}', [HomeController::class, 'getpost'])->name('getpost');
 
+Auth::routes();
 Route::middleware(['role:admin'])->prefix('admin_panel')->group(function(){
     Route::get('/',[App\Http\Controllers\Admin\HomeController::class, 'index'])->name('homeAdmin');
     Route::resource('category', CategoryController::class);

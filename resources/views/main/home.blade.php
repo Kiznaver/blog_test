@@ -5,9 +5,13 @@
 @section ( 'content' )
 
     @include('includes.categoryes')
+
     <div class="card mb-4">
         @foreach ($posts as $post)
         @if ($post->chbox=='1')
+        <div class="div">
+            {{ Breadcrumbs::render('postcategory', $post) }}
+        </div>
             <div class="card-header">
                 @if ( $post->category == null )
                     Категорія була видалена

@@ -112,7 +112,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-
+        return view('main.home', ['post' => $post]);
     }
 
     /**
@@ -215,6 +215,5 @@ class PostController extends Controller
         $post->delete();
         return redirect()->back()->withSuccess('Стаття була успішно видалена!');
     }
-
 
 }
