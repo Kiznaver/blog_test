@@ -146,19 +146,50 @@ class PostController extends Controller
         {
             if($check_tag==$request->tag)
             {
-                $check=1;
+                ++$check;
+            }
+            elseif($check>1)
+            {
+
                 return redirect()->back()->withSuccess('Такий тег вже існує!');
             }
         }
-        if($check==0)
+        if($check<=1)
         {
-            $post->tag=$request->tag;
+            $replaced=$request->text;
+            foreach(Post::all() as $add_tags)
+            {
+               if($add_tags->tag!=$request->tag)
+               {
+                   $data='<a href="' . route('getpost', [$add_tags['cat_id'],$add_tags['id']]) . '">' . $add_tags->tag . '</a>';
+                   $replaced = Str::replace($add_tags->tag, $data, $replaced);
+                }
+
+            }
             $post->title=$request->title;
             $post->img=$request->img;
-            $post->text=$request->text;
+            $post->text=$replaced;
             $post->cat_id=$request->cat_id;
             $post->chbox=$request->chbox;
+            if($request->tag!=$post->tag)
+            {
+                foreach(Post::all() as $tags_all)
+                {
+                    if($post->id!=$tags_all->id)
+                    {   $old_text=$tags_all->text;
+                        $data='<a href="' . route('getpost', [$request['cat_id'],$post['id']]) . '">' . $post->tag . '</a>';
+                        $old_text = Str::replace($data, $post->tag, $old_text);
+
+                        $data_new='<a href="' . route('getpost', [$request['cat_id'],$post['id']]) . '">' . $request->tag . '</a>';
+                        $new_text = Str::replace($data_new, $request->tag, $old_text);
+                        $tags_all->text=$new_text;
+                        $tags_all->save();
+                    }
+                }
+            }
+            $post->tag=$request->tag;
             $post->save();
+
             return redirect()->back()->withSuccess('Стаття була успішно оновленна');
         }
     }
@@ -175,14 +206,5 @@ class PostController extends Controller
         return redirect()->back()->withSuccess('Стаття була успішно видалена!');
     }
 
-    // public function update_tags()
-    // {
-    //     foreach($posts as $add_tags)
-    //     $replaced=$add_tags->text;
-    //                        if ($add_tags['tag_id']!==$add_tags->tag['id'])
-    //                             $data='<a href="{{route('getpost',[$add_tags[cat_id],$add_tags[id]])}}">{{$add_tags->tag}}</a>';
-    //                             $replaced = Str::replace($add_tags->tag->title, $data, $replaced);
 
-
-    // }
 }

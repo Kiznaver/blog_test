@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputtext1">Тег статті</label>
-                <input type="text" name="tag"  @foreach ($post as $tag) @if($tag['id']==$post['tag_id']) value="{{$post['tag']}}" @endif @endforeach class="form-control" id="exampleInputEmail1" placeholder="Введіть тег до статті" required>
+                <input type="text" name="tag"  value="{{$post['tag']}}" class="form-control" id="exampleInputEmail1" placeholder="Введіть тег до статті" required>
             </div>
 
               <div  class="form-group">
