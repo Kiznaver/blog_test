@@ -202,6 +202,16 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        foreach(Post::all() as $tags_all)
+        {
+            if($post->id!=$tags_all->id)
+            {   $new_text=$tags_all->text;
+                $data='<a href="' . route('getpost', [$post['cat_id'],$post['id']]) . '">' . $post->tag . '</a>';
+                $new_text = Str::replace($data, $post->tag, $new_text);
+                $tags_all->text=$new_text;
+                $tags_all->save();
+            }
+        }
         $post->delete();
         return redirect()->back()->withSuccess('Стаття була успішно видалена!');
     }

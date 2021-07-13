@@ -19,10 +19,11 @@
             <div class="card-body mb-4">
                 <h5 class="card-title">{{$post['title']}}</h5>
                 <div class="card-text">
-                    @php
+                    {!!$post['text']!!}
+                    {{-- @php
                         echo Str::limit($post['text'], 500, ' (...)');
 
-                    @endphp
+                    @endphp --}}
                       {{-- {!!Str::limit($post['text'], 500, ' (...)')!!} --}}
                 </div>
                 <a href="{{route('getpost',[$post->category['id'],$post->id])}}" class="btn btn-primary">Читати більше</a>
