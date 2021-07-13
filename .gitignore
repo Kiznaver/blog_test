@@ -5,7 +5,7 @@
 /vendor
 /test
 /bootstrap
-/public
+/public/packages
 .env
 .env.backup
 .phpunit.result.cache

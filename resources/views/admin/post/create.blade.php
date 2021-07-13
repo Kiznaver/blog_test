@@ -47,11 +47,6 @@
               <input type="text" name="tag" class="form-control" id="exampleInputEmail1" placeholder="Введіть тег до статті" required>
 
             </div>
-            {{-- <div class="form-group">
-                <label for="exampleInputtext1">Силка тега</label>
-                <input type="text" name="link" value="{{route('getpost',[$post[cat_id],$post[id]])}}" class="form-control" id="exampleInputEmail1" placeholder="" readonly>
-
-            </div> --}}
 
               <div  class="form-group">
                   <textarea name="text" class="editor"> </textarea>

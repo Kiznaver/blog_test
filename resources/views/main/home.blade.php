@@ -20,8 +20,10 @@
                 <h5 class="card-title">{{$post['title']}}</h5>
                 <div class="card-text">
                     @php
-                        echo  $truncated = Str::limit($post->text, 500, ' (...)');
+                        echo Str::limit($post['text'], 500, ' (...)');
+
                     @endphp
+                      {{-- {!!Str::limit($post['text'], 500, ' (...)')!!} --}}
                 </div>
                 <a href="{{route('getpost',[$post->category['id'],$post->id])}}" class="btn btn-primary">Читати більше</a>
             </div>

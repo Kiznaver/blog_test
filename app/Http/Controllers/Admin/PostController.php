@@ -61,9 +61,12 @@ class PostController extends Controller
         {
             $replaced=$request->text;
             foreach(Post::all() as $add_tags)
-            {  // $data='<a href="#">$add_tags->tag</a>';
-                $data='<a href="route('getpost',[$add_tags[cat_id],$add_tags[id]])">$add_tags->tag</a>';
-                $replaced = Str::replace($add_tags->tag, $data, $replaced);
+            {
+               if($add_tags->tag!=$request->tag)
+               {
+                   $data='<a href="' . route('getpost', [$add_tags['cat_id'],$add_tags['id']]) . '">' . $add_tags->tag . '</a>';
+                   $replaced = Str::replace($add_tags->tag, $data, $replaced);
+                }
 
             }
             $post=new Post();
@@ -74,9 +77,29 @@ class PostController extends Controller
             $post->chbox=$request->chbox;
             $post->tag=$request->tag;
             $post->save();
+            foreach(Post::all() as $add_new_tags)
+            {
+                if($add_new_tags->tag!=$request->tag)
+                {
+                    foreach(Post::all() as $tags_all)
+                    {   $new_text=$tags_all->text;
+                        $data='<a href="' . route('getpost', [$request['cat_id'],Post::select('id')->orderBy('id','DESC')->first()]) . '">' . $request->tag . '</a>';
+                        $new_text = Str::replace($request->tag, $data, $new_text);
+                        $tags_all->text=$new_text;
+                        $tags_all->save();
+                    }
+                }
+            }
+
+
+            // ->select('id')->orderBy('id', 'DESC')->first();
 
             return redirect()->back()->withSuccess('Стаття була успішно додана');
         }
+
+
+
+
 
 
     }
