@@ -7,11 +7,9 @@
     @include('includes.categoryes')
 
     <div class="card mb-4">
+
         @foreach ($posts as $post)
         @if ($post->chbox=='1')
-        <div class="div">
-            {{ Breadcrumbs::render('postcategory', $post) }}
-        </div>
             <div class="card-header">
                 @if ( $post->category == null )
                     Категорія була видалена
@@ -24,11 +22,7 @@
                 <h5 class="card-title">{{$post['title']}}</h5>
                 <div class="card-text">
                     {!!$post['text']!!}
-                    {{-- @php
-                        echo Str::limit($post['text'], 500, ' (...)');
 
-                    @endphp --}}
-                      {{-- {!!Str::limit($post['text'], 500, ' (...)')!!} --}}
                 </div>
                 <a href="{{route('getpost',[$post->category['id'],$post->id])}}" class="btn btn-primary">Читати більше</a>
             </div>
